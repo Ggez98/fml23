@@ -1,0 +1,69 @@
+#WEEK-5 NAIVE BAYES CLASSIFICATION AGORITHM
+
+from sklearn.naive_bayes import GaussianNB
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+# Load the Iris dataset
+#df = pd.read_csv(".../iris.data.csv")
+iris = load_iris()
+X = iris.data
+y = iris.target
+# df.head()
+# df.columns=["sl","sw","pl","pw","species"]
+# df.sample(10)
+# df["sl"].head()
+# df.shape
+# Split the dataset into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.2, random_state=0)
+# Create a Naive Bayes classifier
+classifier = GaussianNB()
+# Train the classifier
+classifier.fit(X_train, y_train)
+GaussianNB()
+# Make predictions on the test set
+y_pred = classifier.predict(X_test)
+# Calculate the accuracy of the classifier
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy*100)
+#Accuracy: 96.66666666666667
+
+#code-2
+from sklearn.naive_bayes import GaussianNB
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+import pandas as pd
+from sklearn import metrics
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.datasets import make_classification
+df = pd.read_csv("D:/FML Lab/pima_indian.csv")
+feature_col_names = ['num_preg', 'glucose_conc', 'diastolic_bp','thickness', 'insulin', 'bmi', 'diab_pred', 'age']
+predicted_class_names = ['diabetes']
+X = df[feature_col_names].values # these are factors for the
+prediction
+y = df[predicted_class_names].values # this is what we want to predict
+#splitting the dataset into train and test data
+xtrain,xtest,ytrain,ytest=train_test_split(X,y,test_size=0.33)
+print ('\n the total number of Training Data :',ytrain.shape)
+print ('\n the total number of Test Data :',ytest.shape)
+the total number of Training Data : (514, 1)
+the total number of Test Data : (254, 1)
+# Training Naive Bayes (NB) classifier on training data.
+clf = GaussianNB().fit(xtrain,ytrain.ravel())
+predicted = clf.predict(xtest)
+predictTestData= clf.predict([[10,139,80,0,0,27.1,1.441,57]])
+#printing Confusion matrix, accuracy, Precision and Recall
+print('\n Confusion matrix')
+cm = metrics.confusion_matrix(ytest,predicted)
+print(cm)
+print('\n Accuracy of the classifier
+is',metrics.accuracy_score(ytest,predicted))
+print('\n The value of Precision',
+metrics.precision_score(ytest,predicted))
+
+print('\n The value of Recall', metrics.recall_score(ytest,predicted))
+print("Predicted Value for individual Test Data:", predictTestData)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm,
+display_labels=clf.classes_)

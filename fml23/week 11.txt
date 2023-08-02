@@ -1,0 +1,23 @@
+#WEEK 11 CLUSTERING
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+dataset = pd.read_csv('D:/Mall_Customers.csv')
+print(dataset.head(5))
+print(dataset.shape)
+print(dataset.isnull().sum())
+dataset_new = dataset[['Annual Income (k$)','Spending Score (1-100)']].values
+limit = int((dataset_new.shape[0]//2)**0.5)
+cost = {}
+
+for k in range(2,limit+1):
+    model = KMeans(n_clusters=k)
+    model.fit(dataset_new)
+    cost[k] = model.inertia_
+
+plt.plot(cost.keys(), cost.values(), 'gs-')
+plt.xlabel('Values of "K"')
+plt.ylabel('Cost')
+plt.show()
